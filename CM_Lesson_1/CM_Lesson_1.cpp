@@ -32,6 +32,38 @@ bool operator == (const Person& a, const Person& b)
     return !(a < b) && !(b < a);
 }
 
+struct PhoneNumber
+{
+    int countryCode;
+    int cityCode;
+    string number;
+    optional<int> additionalNum;
+    friend ostream& operator << (ostream& out, PhoneNumber pn);
+    friend bool operator < (const PhoneNumber& a, const PhoneNumber& b);
+    friend bool operator == (const PhoneNumber& a, const PhoneNumber& b);
+
+};
+
+ostream& operator << (ostream& out, PhoneNumber pn)
+{
+    cout << "+" << pn.countryCode << "(" << pn.cityCode << ")" << pn.number;
+    if (pn.additionalNum)
+        cout << " " << pn.additionalNum.value();
+
+    return out;
+}
+
+bool operator < (const PhoneNumber& a, const PhoneNumber& b)
+{
+    return tie(a.countryCode, a.cityCode, a.number, a.additionalNum) < tie(b.countryCode, b.cityCode, b.number, b.additionalNum);
+}
+
+bool operator == (const PhoneNumber& a, const PhoneNumber& b)
+{
+    return !(a < b) && !(b < a);
+}
+
+
 int main()
 {
     std::cout << "Hello World!\n";
@@ -49,5 +81,12 @@ int main()
     cout << boolalpha << (pp == p) << endl;
     Person z{ "Petrov", "Nick", nullopt };
     cout << z << endl;
+
+    PhoneNumber pn1{ 7, 495, "1112233", 7 };
+    PhoneNumber pn2{ 7, 495, "3334455", 10 };
+    cout << pn1 << endl;
+    cout << pn2 << endl;
+    cout << boolalpha << (pn1 == pn2) << endl;
+    cout << boolalpha << (pn1 < pn2) << endl;
 }
 
