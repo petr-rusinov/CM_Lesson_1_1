@@ -118,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +143,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CM_Lesson_1.cpp" />
+    <ClCompile Include="Person.cpp" />
+    <ClCompile Include="PhoneBook.cpp" />
+    <ClCompile Include="PhoneNumber.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Person.h" />
+    <ClInclude Include="PhoneBook.h" />
+    <ClInclude Include="PhoneNumber.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
