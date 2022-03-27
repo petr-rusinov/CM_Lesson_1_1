@@ -44,7 +44,6 @@ PhoneBook::PhoneBook(ifstream& ifs)
             pn.additionalNum = nullopt;
             for (i = 0; i != str.size(); ++i)
             {
-                //int firstPos = (i == 0) ? i : (i + 1);
                 j = str.find_first_of(',', i);
                 if (j == str.npos)
                     break;
@@ -98,14 +97,14 @@ PhoneBook::PhoneBook(ifstream& ifs)
 
 void PhoneBook::SortByName()
 {
-    sort(phoneBook.begin(), phoneBook.end(), [](const pair<Person, PhoneNumber>& p1, 
-                                                const pair<Person, PhoneNumber>& p2)->bool 
+    sort(phoneBook.begin(), phoneBook.end(), [](const pair<const Person&, const PhoneNumber&>& p1, 
+                                                const pair<const Person&, const PhoneNumber&>& p2)->bool 
                                                 { return p1.first < p2.first; });
 }
 void PhoneBook::SortByPhone()
 {
-    sort(phoneBook.begin(), phoneBook.end(), [](const pair<Person, PhoneNumber>& p1,
-                                                const pair<Person, PhoneNumber>& p2)->bool
+    sort(phoneBook.begin(), phoneBook.end(), [](const pair<const Person&, const PhoneNumber&>& p1,
+                                                const pair<const Person&, const PhoneNumber&>& p2)->bool
                                                 { return p1.second < p2.second; });
 
 }
@@ -140,7 +139,7 @@ tuple<string, PhoneNumber> PhoneBook::GetPhoneNumber(const string& lastName)
     return make_tuple(foundStr, pn);
 }
 
-void PhoneBook::ChangePhoneNumber(Person person, PhoneNumber number)
+void PhoneBook::ChangePhoneNumber(const Person& person, const PhoneNumber& number)
 {
     auto result = find_if(phoneBook.begin(), phoneBook.end(), [&](const auto& entry) { return entry.first == person; });
     if (result != phoneBook.end())

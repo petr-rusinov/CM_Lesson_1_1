@@ -29,6 +29,6 @@ public:
     void SortByPhone();
     tuple<string, PhoneNumber> GetPhoneNumber(const string& lastName);
 
-    void ChangePhoneNumber(Person person, PhoneNumber number);
+    void ChangePhoneNumber(const Person& person, const PhoneNumber& number);
 
 };
