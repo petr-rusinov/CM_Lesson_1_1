@@ -84,7 +84,6 @@ PhoneBook::PhoneBook(ifstream& ifs)
             if (i > (NUM_OF_ENTRIES - 1) - 1) // -1 т.к. последняя запись (доб номер) не обязательна
             {
                 //Все правильно прочитали
-                cout << "read ok" << endl;
                 phoneBook.push_back(pair(p, pn));
             }
             else
