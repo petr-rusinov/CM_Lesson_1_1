@@ -27,29 +27,73 @@ PhoneBook::PhoneBook(ifstream& ifs)
 {
     int i = 0;
     const int strMaxSize = 255;
-    char str[strMaxSize];
+    char buf[strMaxSize];
     vector<string> vs;
+    Person p; PhoneNumber pn;
+    int entryNum = 0;
+    const int NUM_OF_ENTRIES = 7; //кол-во данных в строке
 
     if (ifs)
     {
         while (!ifs.eof())
         {
-            ifs.getline(str, strMaxSize);
-            vs.clear();
-            splitStr(str, vs);
-            Person p; PhoneNumber pn;
-            p.lastName = vs[0];
-            p.firstName = vs[1];
-            p.middleName = vs[2];
-            pn.countryCode = stoi(vs[3]);
-            pn.cityCode = stoi(vs[4]);
-            pn.number = vs[5];
-            pn.additionalNum = 0;
+            ifs.getline(buf, strMaxSize);
+            string str{ buf };
+            int j = 0;
+            entryNum = 0;
+            pn.additionalNum = nullopt;
+            for (i = 0; i != str.size(); ++i)
+            {
+                //int firstPos = (i == 0) ? i : (i + 1);
+                j = str.find_first_of(',', i);
+                if (j == str.npos)
+                    break;
 
-            phoneBook.push_back(pair(p, pn));
+                string s = str.substr(i, j - i);
+                //разбираем данные
+                switch (entryNum)
+                {
+                case 0:
+                    p.lastName = s;
+                    break;
+                case 1:
+                    p.firstName = s;
+                    break;
+                case 2:
+                    p.middleName = s;
+                    break;
+                case 3:
+                    pn.countryCode = stoi(s);
+                    break;
+                case 4:
+                    pn.cityCode = stoi(s);
+                    break;
+                case 5:
+                    pn.number = s;
+                    break;
+                case 6:
+                    pn.additionalNum = stoi(s);
+                    break;
+
+                default:
+                    break;
+                }
+                ++entryNum;
+                i = j;
+            }
+            if (i > (NUM_OF_ENTRIES - 1) - 1) // -1 т.к. последняя запись (доб номер) не обязательна
+            {
+                //Все правильно прочитали
+                cout << "read ok" << endl;
+                phoneBook.push_back(pair(p, pn));
+            }
+            else
+            {
+                //кол-во данных не верное, значит, строка битая
+                cout << "error reading data" << endl;
+            }
         }
     }
-
 }
 
 
@@ -66,7 +110,7 @@ void PhoneBook::SortByPhone()
                                                 { return p1.second < p2.second; });
 
 }
-tuple<string, PhoneNumber> PhoneBook::GetPhoneNumber(string lastName)
+tuple<string, PhoneNumber> PhoneBook::GetPhoneNumber(const string& lastName)
 {
     int numEntries = 0;
     PhoneNumber pn;

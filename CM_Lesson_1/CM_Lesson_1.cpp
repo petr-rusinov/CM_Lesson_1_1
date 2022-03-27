@@ -10,39 +10,6 @@
 using namespace std;
 
 
-
-
-
-
-/*
-int main_1()
-{
-    std::cout << "Hello World!\n";
-
-    Person p;
-    p.firstName = "Peter";
-    p.lastName = "Rusinov";
-    p.middleName = "Vladimirovich";
-    cout << p << endl;
-    Person f{ "Ivanov", "Ivan", "Petrovich" };
-    cout << f << endl;
-    cout << boolalpha << (f < p) << endl;
-    cout << boolalpha << (f == p) << endl;
-    Person pp{ "Rusinov" , "Peter", "Vladimirovich" };
-    cout << boolalpha << (pp == p) << endl;
-    Person z{ "Petrov", "Nick", nullopt };
-    cout << z << endl;
-
-    PhoneNumber pn1{ 7, 495, "1112233", 7 };
-    PhoneNumber pn2{ 7, 495, "3334455", 10 };
-    cout << pn1 << endl;
-    cout << pn2 << endl;
-    cout << boolalpha << (pn1 == pn2) << endl;
-    cout << boolalpha << (pn1 < pn2) << endl;
-    return 0;
-}
-*/
-
 void main()
 {
     ifstream file("Phonebook1.txt"); // путь к файлу PhoneBook.txt

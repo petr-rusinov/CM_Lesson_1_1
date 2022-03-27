@@ -27,7 +27,7 @@ public:
     friend ostream& operator << (ostream& out, const PhoneBook& pb);
     void SortByName();
     void SortByPhone();
-    tuple<string, PhoneNumber> GetPhoneNumber(string lastName);
+    tuple<string, PhoneNumber> GetPhoneNumber(const string& lastName);
 
     void ChangePhoneNumber(Person person, PhoneNumber number);
 
