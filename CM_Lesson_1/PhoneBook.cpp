@@ -4,24 +4,6 @@
 
 using namespace std;
 
-void PhoneBook::splitStr(char* buf, vector<string>& parsedData)
-{
-    string str(buf);
-    vector<string> vs;
-    int j = 0;
-
-    for (int i = 0; i != str.size(); ++i)
-    {
-        j = str.find_first_of(',', i);
-        if (j == str.npos)
-            break;
-
-        string s = str.substr(i, j - i);
-        parsedData.push_back(s);
-        i = j;
-
-    }
-}
 
 PhoneBook::PhoneBook(ifstream& ifs)
 {
@@ -80,6 +62,7 @@ PhoneBook::PhoneBook(ifstream& ifs)
                 ++entryNum;
                 i = j;
             }
+            //Проверка, все ли данные присутствуют в строке
             if (i > (NUM_OF_ENTRIES - 1) - 1) // -1 т.к. последняя запись (доб номер) не обязательна
             {
                 //Все правильно прочитали
