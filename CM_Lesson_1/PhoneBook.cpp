@@ -32,7 +32,7 @@ PhoneBook::PhoneBook(ifstream& ifs)
 
     if (ifs)
     {
-        while (!ifs.eof()) //это убрать?
+        while (!ifs.eof())
         {
             ifs.getline(str, strMaxSize);
             vs.clear();
@@ -45,12 +45,8 @@ PhoneBook::PhoneBook(ifstream& ifs)
             pn.cityCode = stoi(vs[4]);
             pn.number = vs[5];
             pn.additionalNum = 0;
-            phoneBook.push_back(pair(p, pn));
 
-            //что-то сделать с данными
-            //for (string s : vs)
-            //    cout << s << " ";
-            //cout << endl;
+            phoneBook.push_back(pair(p, pn));
         }
     }
 
@@ -59,24 +55,59 @@ PhoneBook::PhoneBook(ifstream& ifs)
 
 void PhoneBook::SortByName()
 {
-    //sort(phoneBook.begin(), phoneBook.end(), [](const Person& p1, const Person& p2)->bool { return false; });
+    sort(phoneBook.begin(), phoneBook.end(), [](const pair<Person, PhoneNumber>& p1, 
+                                                const pair<Person, PhoneNumber>& p2)->bool 
+                                                { return p1.first < p2.first; });
 }
 void PhoneBook::SortByPhone()
 {
+    sort(phoneBook.begin(), phoneBook.end(), [](const pair<Person, PhoneNumber>& p1,
+                                                const pair<Person, PhoneNumber>& p2)->bool
+                                                { return p1.second < p2.second; });
 
 }
-//tuple<string, PhoneNumber> getPhoneNumber(string lastName)
-//{
-//    return tie()
-//}
-
-void PhoneBook::changePhoneNumber(Person person, PhoneNumber number)
+tuple<string, PhoneNumber> PhoneBook::GetPhoneNumber(string lastName)
 {
+    int numEntries = 0;
+    PhoneNumber pn;
+    string foundStr;
 
+    for_each(phoneBook.begin(), phoneBook.end(), [&](const auto& entry) 
+                                                    {  
+                                                        if (entry.first.lastName == lastName)
+                                                        {
+                                                            ++numEntries;
+                                                            pn = entry.second;
+                                                        }
+                                                    });
+
+    if (numEntries == 0)
+    {
+        foundStr = "not found";
+    }
+    else if (numEntries == 1)
+    {
+        foundStr = "";
+    }
+    else if (numEntries > 1)
+    {
+        foundStr = "found more than 1";
+    }
+
+    return make_tuple(foundStr, pn);
+}
+
+void PhoneBook::ChangePhoneNumber(Person person, PhoneNumber number)
+{
+    auto result = find_if(phoneBook.begin(), phoneBook.end(), [&](const auto& entry) { return entry.first == person; });
+    if (result != phoneBook.end())
+    {
+        (*result).second = number;
+    }
 }
 
 
-ostream& operator << (ostream& out, PhoneBook pb)
+ostream& operator << (ostream& out, const PhoneBook& pb)
 {
     for (auto p : pb.phoneBook)
     {

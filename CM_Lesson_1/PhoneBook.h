@@ -24,11 +24,11 @@ private:
 public:
     PhoneBook(ifstream& ifs);
 
-    friend ostream& operator << (ostream& out, PhoneBook pb);
+    friend ostream& operator << (ostream& out, const PhoneBook& pb);
     void SortByName();
     void SortByPhone();
-    //tuple<string, PhoneNumber> getPhoneNumber(string lastName);
+    tuple<string, PhoneNumber> GetPhoneNumber(string lastName);
 
-    void changePhoneNumber(Person person, PhoneNumber number);
+    void ChangePhoneNumber(Person person, PhoneNumber number);
 
 };

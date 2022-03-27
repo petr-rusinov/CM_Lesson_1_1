@@ -1,6 +1,6 @@
 #include "PhoneNumber.h"
 
-ostream& operator << (ostream& out, PhoneNumber pn)
+ostream& operator << (ostream& out, const PhoneNumber& pn)
 {
     cout << "+" << pn.countryCode << "(" << pn.cityCode << ")" << pn.number;
     if (pn.additionalNum)
